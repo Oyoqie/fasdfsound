@@ -17,17 +17,9 @@ struct chk_wavfile {
 	DWORD ChunkId;
 	DWORD ChunkSize;
 
+	chk_wavfile::~chk_wavfile();
+	BYTE* LoadData(const size_t n);
 	BYTE *Data;
-
-	BYTE* LoadData(const size_t n) {
-		Data = (BYTE*)malloc(n);
-		return Data;
-	}
-
-	~chk_wavfile() {
-		if (Data)
-			free(Data);
-	}
 };
 
 struct hdr_wavfile {
