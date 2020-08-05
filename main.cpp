@@ -122,12 +122,10 @@ int main(int argc, char **argv) {
 		fread(&hdr, sizeof(hdr_wavfile), 1, file);
 		fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
 
-		if (chk.ChunkId == SubChunks::list)
+		if (chk.ChunkId == SubChunks::list) {
 			fseek(file, chk.ChunkSize, SEEK_CUR);
-
-		fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
-
-		if (chk.ChunkId == SubChunks::data) {
+			fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
+		}else if (chk.ChunkId == SubChunks::data) {
 			chk.LoadData(chk.ChunkSize);
 			fread(chk.Data, chk.ChunkSize, 1, file);
 		}
