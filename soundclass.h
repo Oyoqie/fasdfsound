@@ -17,6 +17,7 @@ struct chk_wavfile {
 	DWORD ChunkId;
 	DWORD ChunkSize;
 
+	chk_wavfile::chk_wavfile();
 	chk_wavfile::~chk_wavfile();
 	BYTE* LoadData(const size_t n);
 	BYTE *Data;
