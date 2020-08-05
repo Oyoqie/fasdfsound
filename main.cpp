@@ -11,8 +11,8 @@ private:
 
 public:
 	Audio() :	ds(NULL),
-				dssb(NULL),
-				dspb(NULL) {}
+			dssb(NULL),
+			dspb(NULL) {}
 
 	~Audio() {}
 
@@ -124,12 +124,10 @@ int main(int argc, char **argv) {
 		fread(&hdr, sizeof(hdr_wavfile), 1, file);
 		fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
 
-		if (chk.ChunkId == SubChunks::list)
+		if (chk.ChunkId == SubChunks::list) {
 			fseek(file, chk.ChunkSize, SEEK_CUR);
-
-		fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
-
-		if (chk.ChunkId == SubChunks::data) {
+			fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
+		}else if (chk.ChunkId == SubChunks::data) {
 			chk.LoadData(chk.ChunkSize);
 			fread(chk.Data, chk.ChunkSize, 1, file);
 		}
@@ -138,7 +136,6 @@ int main(int argc, char **argv) {
 
 		printf("Audio::Init %d\n",
 			audio.Init(hWnd));
-			//int channels, int secs, int samplerate, int bitspersample, DWORD flags
 		printf("Audio::CreateSecondaryBuffer %d\n",
 			audio.CreateSecondaryBuffer(hdr.nChannels, chk.ChunkSize, hdr.nSamplesPerSec, hdr.wBitsPerSample, 0));
 		printf("Audio::LoadToBuffer %d\n", audio.LoadToBuffer(chk.Data, chk.ChunkSize));
