@@ -10,11 +10,16 @@ private:
 	LPDIRECTSOUNDBUFFER dspb; //primary sound buffer
 
 public:
-	Audio() :		ds(NULL),
+	Audio() :	ds(NULL),
 				dssb(NULL),
 				dspb(NULL) {}
 
-	~Audio() {}
+	~Audio() {
+		if (ds)
+			ds->Release();
+		if (dssb)
+			dssb->Release();
+	}
 
 	bool Init(HWND hWnd) {
 		if (DirectSoundCreate(NULL, &ds, NULL) != DS_OK)
