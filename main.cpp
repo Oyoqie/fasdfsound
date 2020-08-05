@@ -10,9 +10,9 @@ private:
 	LPDIRECTSOUNDBUFFER dspb; //primary sound buffer
 
 public:
-	Audio() :	ds(NULL),
-			dssb(NULL),
-			dspb(NULL) {}
+	Audio() :		ds(NULL),
+				dssb(NULL),
+				dspb(NULL) {}
 
 	~Audio() {}
 
@@ -118,16 +118,16 @@ int main(int argc, char **argv) {
 
 	ShowWindow(hWnd, SW_SHOW);
 
-	if (fopen_s(&file, "sound01.wav", "rb") == 0) {
-		printf("Opened sound01.wav\n");
-
+	if (fopen_s(&file, argv[1], "rb") == 0) {
 		fread(&hdr, sizeof(hdr_wavfile), 1, file);
 		fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
 
-		if (chk.ChunkId == SubChunks::list) {
+		if (chk.ChunkId == SubChunks::list)
 			fseek(file, chk.ChunkSize, SEEK_CUR);
-			fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
-		}else if (chk.ChunkId == SubChunks::data) {
+
+		fread(&chk, sizeof(chk_wavfile) - 4, 1, file);
+
+		if (chk.ChunkId == SubChunks::data) {
 			chk.LoadData(chk.ChunkSize);
 			fread(chk.Data, chk.ChunkSize, 1, file);
 		}
