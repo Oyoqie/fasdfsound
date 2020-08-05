@@ -1,11 +1,12 @@
 WIN_LIBS=dsound.lib dxguid.lib winmm.lib user32.lib
 CFLAGS=/Ox /W3 /nologo /openmp
-main_libs=soundclass.obj advapi32.lib iphlpapi.lib $(WIN_LIBS)
+main_libs=advapi32.lib iphlpapi.lib $(WIN_LIBS)
+#soundclass.obj
 
 startup: main
 
-main: soundclass
+main:
 	$(CC) $(CFLAGS) /I. main.cpp $(main_libs)
 
-soundclass:
-	$(CC) $(CFLAGS) /c /I. soundclass.cpp
+#soundclass:
+#	$(CC) $(CFLAGS) /c /I. soundclass.cpp
